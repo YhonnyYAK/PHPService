@@ -2,14 +2,23 @@
 require_once("PeliculaController.php");
 require_once("PeliculaModel.php");
 
-	//Instanciar Controlador
+	/*Instanciar Controlador*/
 	$Controlador = New PeliculaController();
 	
-	$Datos = $Controlador->ListarPeliculas();
+	$Datos = $Controlador->ListarPeliculasJSON();
 
-	//Vista json
-	header('Content-Type: application/json');
-	return $Datos;
-	//
+	/*Permiso de Acceso*/
+	header("Access-Control-Allow-Origin: *");
+	
+	/*Vista json*/
+	//header('Content-Type: application/json');
+	//print $Datos;
+	
+	
+	$Datos2 = $Controlador->ListarPeliculasXML();
+	
+	/*Vista XML*/
+	header('Content-Type: application/xml; charset=utf-8');
+	print $Datos2;
 
 ?>

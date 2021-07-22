@@ -1,6 +1,6 @@
 <?php
 
-Public class PeliculaModel{
+class PeliculaModel{
 	
 	public $id = null;
 	public $nombre = null;

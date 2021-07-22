@@ -7,7 +7,7 @@
 				'host' => 'localhost',
 				'username' => 'root',
 				'password' => '',
-				'db' => 'Cine' 
+				'db' => 'cinedb' 
 			];
 		  
 		  $conn = new PDO("mysql:host={$db['host']};dbname={$db['db']};charset=utf8", $db['username'], $db['password']);
