@@ -74,6 +74,64 @@ Class PeliculaController{
 		Return $ObjXML->saveXML();
 		
 	}
+
+	public function GrabarPeliculaJSON($Trama){
+
+		$db = ConnectDB();
+		$Data = json_decode($Trama, true);
+
+		$Pelicula = new PeliculaModel();
+		$Pelicula->id = $Data["id"];
+		$Pelicula->nombre = $Data["nombre"];
+		$Pelicula->director = $Data["director"];
+		$Pelicula->fecha = $Data["fecha"];
+
+		$Consulta = "INSERT INTO Peliculas(nombre,director,fecha) 
+					 VALUES('$Pelicula->nombre','$Pelicula->director','$Pelicula->fecha')";
+
+		$Respuesta = $db->query($Consulta);
+
+		$Id = $db->lastInsertId();
+		$Mensaje = "Producto creado correctmente";
+
+		$Salida = "{'id':'$Id', 'Mensaje': '$Mensaje'}";
+
+		return $Salida;
+	}
+
+	public function GrabarPeliculaXML($Trama){
+
+		$db = ConnectDB();
+		$TramaXML = simplexml_load_string($Trama);
+
+		$DataJson = json_encode($TramaXML);
+		$Data = json_decode($DataJson, true);
+
+		$Pelicula = new PeliculaModel();
+		$Pelicula->id = $Data["id"];
+		$Pelicula->nombre = $Data["nombre"];
+		$Pelicula->director = $Data["director"];
+		$Pelicula->fecha = $Data["fecha"];
+
+		$Consulta = "INSERT INTO Peliculas(nombre,director,fecha) 
+					 VALUES('$Pelicula->nombre','$Pelicula->director','$Pelicula->fecha')";
+
+		$Respuesta = $db->query($Consulta);
+
+		$Id = $db->lastInsertId();
+		$Mensaje = "Producto creado correctmente";
+
+		$ObjXML = new DOMDocument('1.0', 'utf-8');
+		$ObjXML->preserveWhiteSpace = false;
+		$ObjXML->formatOutput = true;
+
+		$Salida = $ObjXML->appendChild($ObjXML->createElement('Respuesta'));
+		$Salida->appendChild($ObjXML->createElement('id',$Id));
+		$Salida->appendChild($ObjXML->createElement('Mensaje',$Mensaje));
+
+		return $ObjXML->saveXML();
+
+	}
 	
 }
 
